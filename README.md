@@ -24,24 +24,28 @@ This project implements that scheme end to end:
 Each triplet `(x₂ᵢ₊₁, x₂ᵢ, x₂ᵢ₋₁)` of the multiplicand selects a partial product according to the standard radix-4 modified Booth table:
 
 ![Booth encoding table](readme_assets/booth_encoding_table.png)
+*Figure 1: Booth encoding truth table (Source: N. Weste & D. Harris, CMOS VLSI Design).*
 
 ### 2. Booth Encoder & Selector (gate level)
 
 `boothencoder` derives the `SINGLE`/`DOUBLE`/`NEG` control bits from a triplet; `boothselector` uses them to pick `0`, `Y`, or `2Y` (via a `<<1` shift) and conditionally complements it:
 
 ![Encoder and selector](readme_assets/encoder_selector.png)
+*Figure 2: Booth Encoder and Selector architecture (Source: N. Weste & D. Harris, CMOS VLSI Design).*
 
 ### 3. Partial Product Generation
 
 `X` and `Y` are registered, `X` is split into 4 overlapping triplets, and each Booth encoder produces one sign-extended partial product:
 
 ![Partial product generation](readme_assets/pp_generation.png)
+*Figure 3: Complete block diagram*
 
 ### 4. Partial Product Addition
 
 To minimize delay, the four partial products are combined with a parallel tree of Carry-Select Adders — 14-bit and 10-bit adders run in parallel, then a final 12-bit adder merges the results. Bits that have no contending row (`a0`, `a1`, `e0`, `e1`, ...) skip the adder tree entirely and pass straight through:
 
 ![Partial product addition](readme_assets/pp_addition.png)
+*Figure 4: Addition logic*
 
 ---
 
@@ -107,6 +111,7 @@ As expected from technology scaling: **~7× faster** critical path and **~22× s
 ### Layout (Innovus, 45 nm)
 
 ![Layout](readme_assets/layout_45nm.png)
+*Figure 5: 45nm layout*
 
 I/O pads follow the tool's optimal placement; clock tree synthesis (CTS) was applied for uniform clock distribution.
 
@@ -125,11 +130,5 @@ vsim project
 ---
 
 ## References
-
-[1] N. Weste and D. Harris, *"CMOS VLSI Design: A Circuits and Systems Perspective,"* 3rd Edition, Pearson Addison Wesley, Boston, 2005.
-
----
-
-## License
-
-MIT — feel free to reference this as a learning resource. If you're taking the same course, please treat this as a reference rather than a submission to copy.
+The theoretical background, truth tables, and architectural diagrams used in this project are based on the following literature:
+N. Weste and D. Harris, *"CMOS VLSI Design: A Circuits and Systems Perspective,"* 3rd Edition, Pearson Addison Wesley, Boston, 2005.
