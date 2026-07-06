@@ -117,18 +117,6 @@ I/O pads follow the tool's optimal placement; clock tree synthesis (CTS) was app
 
 ---
 
-## Simulation
-
-Each module was verified individually against its truth table / expected outputs in ModelSim before integration (see `anafora.pdf` for waveforms). To simulate:
-
-```bash
-vlib work
-vcom rtl/*.vhd
-vsim project
-```
-
----
-
 ## References
 The theoretical background, truth tables, and architectural diagrams used in this project are based on the following literature:
 N. Weste and D. Harris, *"CMOS VLSI Design: A Circuits and Systems Perspective,"* 3rd Edition, Pearson Addison Wesley, Boston, 2005.
