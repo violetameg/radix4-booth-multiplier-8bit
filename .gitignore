@@ -1,0 +1,11 @@
+# ModelSim files
+work/
+*.wlf
+transcript
+
+# Cadence Genus / Innovus files
+*.log
+*.cmd
+*.rpt
+fv/
+timingReports/
